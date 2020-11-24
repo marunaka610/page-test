@@ -1,0 +1,46 @@
+
+.square {
+  background: rgb(0, 127, 0);
+  border: 1.5px solid rgb(0, 0, 0);
+  /* float: left; */
+  line-height: 50px;
+  height: 50px;
+  margin-right: 0px;
+  margin-top: 0px;
+  padding: 0;
+  width: 50px;
+  position: relative;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+
+.piece-black {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, #000000 0%, #222222 80%);
+  box-shadow: inset 0 4px 0 #111111, 0 4px 4px #114411 ;
+  position: absolute;
+  left: 5px; 
+  top: -10px; 
+}
+.piece-white {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  /* background: white; */
+  background: linear-gradient(to bottom right, #FFFFFF 0%, #EEEEEE 80%);
+  box-shadow: inset 0 4px 0 #EEEEEE, 0 4px 4px #114411 ;
+  position: absolute;
+  left: 5px; 
+  top: -10px;
+  /* left: -50%;  */
+  /* float: left; */
+}
