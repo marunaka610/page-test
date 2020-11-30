@@ -1,3 +1,9 @@
-import * as Render from './render';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './app/app';
+import './index.css';
 
-Render.renderAll();
+ReactDOM.render(
+  <App />,
+  document.getElementById('app')
+);

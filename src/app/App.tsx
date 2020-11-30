@@ -1,5 +1,5 @@
 import React from 'react';
-import Game from '../view/Game';
+import Game from '../view/game';
 import Header from './Header';
 import Footer from './Footer';
 
