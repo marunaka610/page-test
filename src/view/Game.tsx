@@ -1,8 +1,9 @@
-import React from 'react';
-import Board from '../components/board'
+// import React from 'react';
+import { Board } from '../components/board'
 import { Side, Setting } from 'logic/rule';
 import './game.css'
-import Square from '../components/square';
+import { Square } from '../components/square';
+import React, { useState } from 'react';
 
 interface Props {
 }
@@ -12,20 +13,13 @@ interface State {
   pieces?: number[][]
 }
 
-export default class Game extends React.Component<Props, State> {
+export function Game(props : Props) {
 
-  constructor(props : Props){
-    super(props)
-    this.state = {
-      turn : Side.Black,
-      pieces: this.initPieces()
-    }
-    console.log("constructor game");
-  }
-  /**
-   * 駒の初期配置を作成
-   */
-  initPieces() : number[][] {
+  /** ターン */
+  const [turn, setTurn] = useState(Side.Black);
+
+  /** 駒の初期配置を作成 */
+  function initPieces() : number[][] {
     let initPieces : number[][] = [];
     for (let r = 0; r < Setting.BOARD_SIZE; r++) {
       let row : number[] = [];
@@ -43,53 +37,39 @@ export default class Game extends React.Component<Props, State> {
     return initPieces;
   }
 
-renderSquares() {
-  return () => this.state.pieces!.map((row, i) => {
-    return <tr>{
-      row.map((e, j) => {
-        return  <Square row={i} 
-          column={j}
-          piece={e}
-          useGameState={this.useGameState()} 
-          changeGameState={this.changeGameState()} 
-          />
-      })
-    }</tr>
-  })
-}
-
-
-  useGameState(){
-    let this_component = this;
-    return (func : (side: number, piecies: number[][]) => void) => {
-      func(this_component.state.turn!, this_component.state.pieces!)
-    }
+  /** 駒の初期配置 */
+  const [piecies, setPiecies] = useState(initPieces());
+  
+  function useGameState(func : (param_turn : number, param_piecies: number[][]) => void) {
+      func(turn, piecies)
+    
   }
 
-  changeGameState () {
-    let this_component = this;
-    return (pieces: number[][]) => {
-      this_component.setState((state : State) => {
-        
-        if (state === undefined) { return null}
-      
-        const prevTurn : number = state.turn!;
-        return {
-          pieces: pieces,
-          turn: prevTurn * -1,
-        }
-      })
+  function changeGameState  (param_pieces: number[][]) {
+      setPiecies(param_pieces);
+      setTurn(turn * -1);
     }
-  }
   
 
-  render() {
-    console.log(this.state.pieces)
-    console.log('render game')
-    return <div className='game'>
-      <Board 
-        renderSquares={this.renderSquares()} 
-      />
-    </div>
+  function renderSquares() {
+    return () => piecies.map((row, i) => {
+      return <tr>{
+        row.map((e, j) => {
+          return  <Square row={i} 
+            column={j}
+            piece={e}
+            useGameState={useGameState} 
+            changeGameState={changeGameState} 
+            />
+        })
+      }</tr>
+    })
   }
+
+  
+    return (<div className='game'>
+      <Board 
+        renderSquares={renderSquares()} 
+      />
+    </div>);
 }

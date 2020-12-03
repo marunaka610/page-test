@@ -1,66 +1,58 @@
-import React from 'react';
+// import React from 'react';
+import React, { useState } from 'react';
+import { Side } from 'logic/rule';
 import './square.css'
 
-const Piece = {
-  None : 0,
-  Black : 1,
-  White : -1
-};
-
 interface Props{
-
+  /** 行番号 */
   row: number;
+
+  /** 列番号 */
   column: number;
+
+  /** 駒の初期値 */
   piece: number
+
+  /** ゲームの状態を利用 */
   useGameState: (func: (side: number, piecies: number[][]) => void) => void;
+
+  /** ゲームの状態を変更 */
   changeGameState: (piecies: number[][]) => void;
 }
 
-interface State {
-  piece?: number
-}
+export function Square(props: Props) {
 
-export default class Square extends React.Component<Props, State> {
+  /** 駒 */
+  const [piece, setPiece] = useState(props.piece);
 
-  constructor(props: Props){
-    super(props);
-    this.state = {
-      piece: this.props.piece
-    }
-  }
-
-  onClick() {
-    console.log("row: " + this.props.row + ", column: " + this.props.column)
-    let newSide;
-    this.props.useGameState((side: number, piecies: number[][]) => {
-      newSide = side; 
-      piecies[this.props.row][this.props.column] = side;
-      this.props.changeGameState(piecies);
-    });
-    this.setState({
-      piece: newSide
+  /** クリック時の駒配置制御 */
+  function onClick() {
+    props.useGameState((side: number, piecies: number[][]) => {
+      let newSide = side; 
+      piecies[props.row][props.column] = side;
+      props.changeGameState(piecies);
+      setPiece ( newSide );
     });
   }
 
-  showPiece() {
-    if (this.state.piece === Piece.Black) {
+  /** ピースの見え方を定義 */
+  function showPiece() {
+    if (piece === Side.Black) {
       return (<p className='piece-black'></p>)
-    } else if (this.state.piece === Piece.White){
+    } else if (piece === Side.White){
         return (<p className='piece-white'></p>)
     }
   }
 
-  render() {
-    return (
-      <td 
-        key={ 'row' + this.props.row + '_col' + this.props.column}
-        className='square' 
-        data-row={this.props.row} 
-        data-column={this.props.column}
-        onClick={() => this.onClick()}
-      >{
-        this.showPiece()
-      }</td>
-    );
-  }
+  return (
+    <td 
+      key={ 'row' + props.row + '_col' + props.column}
+      className='square' 
+      data-row={props.row} 
+      data-column={props.column}
+      onClick={() => onClick()}
+    >{
+      showPiece()
+    }</td>
+  );
 }

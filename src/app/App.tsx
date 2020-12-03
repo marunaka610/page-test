@@ -1,30 +1,22 @@
 import React from 'react';
-import Game from '../view/game';
-import Header from './Header';
-import Footer from './Footer';
+import {Game} from '../view/game';
+import Header from './header';
+import Footer from './footer';
 
-interface State {
-  game: Game
-}
 interface Props {
 }
 
 
-export default class App extends React.Component<Props, State> {
+export function App() {
 
-  componentDidMount() {
-    console.log("App componentDidMount")
-  }
-  render() {
     return (
       <div id='content' >
         <Header />
         <Game />
-        {/* {this.state.game.render()} */}
         <br />
         <Footer />
       </div>
 
     );
-  }
+  
 }

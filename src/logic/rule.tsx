@@ -1,4 +1,4 @@
-import Square from '../components/square';
+import { Square } from '../components/square';
 
 export const Setting = {
   BOARD_SIZE : 8
@@ -41,14 +41,15 @@ export class Position {
   }
 }
 
-export function enableSetPiece(p : Position, squares : Square[][]){
+export function enableSetPiece(p : Position, squares : number[][]){
   Object.keys(Direction).forEach(element => {
     return enabelSetPieceImpl(p, 1, false, squares);
   });
 }
 function enabelSetPieceImpl(prePoint : Position
   , offset : number
-  , isReverse : boolean, squares : Square[][]){
+  , isReverse : boolean
+  , squares : number[][]){
 
     const curPoint = new Position({
       row : prePoint.state.row,
