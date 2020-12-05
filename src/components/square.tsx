@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Side } from 'logic/rule';
 import './square.css'
 
-interface Props{
+interface Props {
   /** 行番号 */
   row: number;
 

@@ -1,19 +1,10 @@
-// import React from 'react';
+import React, { useState } from 'react';
 import { Board } from '../components/board'
 import { Side, Setting } from 'logic/rule';
-import './game.css'
 import { Square } from '../components/square';
-import React, { useState } from 'react';
+import './game.css'
 
-interface Props {
-}
-
-interface State {
-  turn?:number, 
-  pieces?: number[][]
-}
-
-export function Game(props : Props) {
+export function Game() {
 
   /** ターン */
   const [turn, setTurn] = useState(Side.Black);
@@ -40,19 +31,19 @@ export function Game(props : Props) {
   /** 駒の初期配置 */
   const [piecies, setPiecies] = useState(initPieces());
   
+  /** ゲームの状態を利用 */
   function useGameState(func : (param_turn : number, param_piecies: number[][]) => void) {
-      func(turn, piecies)
-    
+    func(turn, piecies);
   }
 
+  /** ゲームの状態を更新 */
   function changeGameState  (param_pieces: number[][]) {
-      setPiecies(param_pieces);
-      setTurn(turn * -1);
-    }
-  
+    setPiecies(param_pieces);
+    setTurn(turn * -1);
+  }
 
-  function renderSquares() {
-    return () => piecies.map((row, i) => {
+  function renderSquares() { 
+    return piecies.map((row, i) => {
       return <tr>{
         row.map((e, j) => {
           return  <Square row={i} 
@@ -66,10 +57,9 @@ export function Game(props : Props) {
     })
   }
 
-  
-    return (<div className='game'>
-      <Board 
-        renderSquares={renderSquares()} 
-      />
-    </div>);
+  return (<div className='game'>
+    <Board 
+      renderSquares={renderSquares} 
+    />
+  </div>);
 }
