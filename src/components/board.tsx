@@ -16,5 +16,4 @@ export function Board(props : Props) {
       </table>
     </div>
   );
- 
 }
