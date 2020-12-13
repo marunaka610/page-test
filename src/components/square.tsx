@@ -19,12 +19,19 @@ interface Props {
 
   /** ゲームの状態を変更 */
   changeGameState: (piecies: SquareObj[][]) => void;
+
+  /** ゲーム終了判定 */
+  isEnd: boolean;
 }
 
 export function Square(props: Props) {
 
   /** クリック時の駒配置制御 */
   function onClick() {
+
+    if (props.isEnd) return;
+    
+
     props.useGameState((side: number, piecies: SquareObj[][]) => {
       // 置けるか判定
       if (logic.enableSetPiece(
@@ -35,30 +42,13 @@ export function Square(props: Props) {
         // 駒を置く
         piecies[props.row][props.column].setPiece(side);
         // 駒を返す
-        logic.turnOverPiece(
+        const updated = logic.turnOverPiece(
           {row : props.row, column : props.column}
           , piecies
           , side
         )
-        // 置ける場所を判定
-        const enableView = piecies.map((row, i) => {
-          return row.map((col, j) => {
-            if (col.isBlack() || col.isWhite()){
-              return col;
-            } else if (logic.enableSetPiece(
-              {row : i, column : j}
-              , piecies
-              , side === logic.SquareState.Black ? logic.SquareState.White : logic.SquareState.Black
-              )){
-                return new SquareObj(logic.SquareState.EnableSet);
-            } else {
-              return new SquareObj(logic.SquareState.None);
-            }
-          });
-        });
 
-
-        props.changeGameState(enableView);
+        props.changeGameState(updated);
       }
     });
   }
@@ -85,3 +75,4 @@ export function Square(props: Props) {
     }</td>
   );
 }
+

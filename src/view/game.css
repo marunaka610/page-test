@@ -1,5 +1,6 @@
 .game {
   /* position: absolute; */
   margin: auto;
-  display: flex;
+  width: 80%;
+  max-width: 500px;
 }

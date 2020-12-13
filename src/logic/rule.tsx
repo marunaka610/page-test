@@ -1,5 +1,4 @@
 
-import React from 'react';
 import { SquareObj } from '../components/square_obj';
 
 /** 設定 */
@@ -39,6 +38,13 @@ export const Directions : Direction[]= [
   {row:-1, column:-1},
 ]
 
+/**
+ * 相手のターンを取得
+ * @param myTurn 自分のターン
+ */
+export function getEnemyTurn(myTurn : number){
+  return myTurn === SquareState.Black ? SquareState.White : SquareState.Black;
+}
 
 export function enableSetPiece(
   p : Position

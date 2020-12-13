@@ -21,7 +21,9 @@ export class SquareObj {
   isWhite() : boolean {
     return this.state === SquareState.White;
   }
-
+  isEnableSet() : boolean {
+    return this.state === SquareState.EnableSet;
+  }
 
   isSamePiece(piece : number) : boolean {
     return this.state === piece;

@@ -2,6 +2,8 @@ import React from 'react';
 
 export function Header() {
   return (
-    <header>header</header>
+    <header>
+      <h1>Reversi Game</h1>
+    </header>
   );
 }
